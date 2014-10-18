@@ -16,34 +16,42 @@ int main(int argc, char* argv[]) {
 	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), glm::vec3(0.0f, 0.0f, 1.0f), 80.0f);
 	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
 
-	FILE* outFile = fopen("output.pgm", "w");
-	int width = 800;
-	int height = 800;
-	std::fprintf(outFile, "P2\n");
-	std::fprintf(outFile, "%i %i\n", width, height);
-	std::fprintf(outFile, "255\n");
+	const int width = 800;
+	const int height = 800;
+	int* image = new int[width * height];
+
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			float localX = 2.0f * static_cast<float>(x) / width - 1.0f;
 			float localY = 2.0f * static_cast<float>(y) / height - 1.0f;
-			localY *= -1.0f;
-			Ray ray = camera.GenerateRay(localX, localY);
+			Ray ray = camera.GenerateRay(localX, -localY);
 			RaycastResult result = scene.Intersect(ray);
 			if (result.hit) {
 				float maxDist = 5.0f;
 				float visualDistance = glm::min(result.distance, maxDist);
 				visualDistance = glm::max(0.0f, visualDistance);
 				int intensity = static_cast<int>(255.0f - 255.0f * visualDistance / maxDist);
-				std::fprintf(outFile, "%i", intensity);
+				image[width * y + x] = intensity;
 			}
 			else {
-				std::fprintf(outFile, "0");
+				image[width * y + x] = 0;
 			}
+		}
+	}
+
+	FILE* outFile = fopen("output.pgm", "w");
+	std::fprintf(outFile, "P2\n");
+	std::fprintf(outFile, "%i %i\n", width, height);
+	std::fprintf(outFile, "255\n");
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			std::fprintf(outFile, "%i", image[width * y + x]);
 			std::fprintf(outFile, " ");
 		}
 		std::fprintf(outFile, "\n");
 	}
 
 	std::fclose(outFile);
+	delete[] image;
 	return 0;
 }
