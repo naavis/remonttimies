@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 
 	const int width = 800;
 	const int height = 800;
-	int* image = new int[width * height];
+	std::vector<int> image(width * height);
 
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
@@ -52,6 +52,5 @@ int main(int argc, char* argv[]) {
 	}
 
 	std::fclose(outFile);
-	delete[] image;
 	return 0;
 }
