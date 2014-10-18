@@ -10,8 +10,6 @@ Scene SceneFactory::CreateFromFile(const std::string& filename) {
 	const aiScene* scene = importer.ReadFile(filename,
 		aiProcess_Triangulate |
 		aiProcess_ImproveCacheLocality |
-		aiProcess_FindDegenerates |
-		aiProcess_RemoveRedundantMaterials |
 		aiProcess_PreTransformVertices);
 
 	Scene::vertexList vertices = GetVertices(scene);
