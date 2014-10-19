@@ -51,7 +51,47 @@ int main(int argc, char* argv[]) {
 		}
 		std::fprintf(outFile, "\n");
 	}
-
 	std::fclose(outFile);
+
+	glfwInit();
+	auto window = glfwCreateWindow(width, height, "Remonttimies", nullptr, nullptr);
+	glfwMakeContextCurrent(window);
+	glewExperimental = GL_TRUE;
+	glewInit();
+
+	const char* vertexShaderSrc = "#version 150\nin vec2 position;\nvoid main()\n{\ngl_position = vec4(position, 0.0, 1.0);\n}\0";
+	const char* fragmentShaderSrc = "#version150\nout vec4 outColor;\nvoid main()\n{\noutColor = vec4(1.0, 1.0, 1.0, 1.0);\n}\0";
+	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
+	glCompileShader(vertexShader);
+	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShaderSrc, nullptr);
+	glCompileShader(fragmentShader);
+	GLuint shaderProgram = glCreateProgram();
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+	glUseProgram(shaderProgram);
+	GLuint sceneVBO;
+	glGenBuffers(1, &sceneVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
+	glBufferData(GL_ARRAY_BUFFER, scene.GetVertices().size() * sizeof(glm::vec3), &(scene.GetVertices()[0]), GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+	GLuint elementBuffer;
+	glGenBuffers(1, &elementBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene.GetFaces().size() * sizeof(glm::ivec3), &(scene.GetFaces()[0]), GL_STATIC_DRAW);
+
+	while (!glfwWindowShouldClose(window)) {
+		glDrawElements(GL_TRIANGLES, scene.GetFaces().size(), GL_UNSIGNED_INT, 0);
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+			glfwSetWindowShouldClose(window, GL_TRUE);
+	}
+
+	glfwTerminate();
+
 	return 0;
 }

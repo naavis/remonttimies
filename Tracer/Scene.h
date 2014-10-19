@@ -11,6 +11,8 @@ public:
 	typedef std::vector<glm::ivec3> faceList;
 	Scene(vertexList vertices, faceList faces);
 	RaycastResult Intersect(Ray ray);
+	const vertexList& GetVertices() const;
+	const faceList& GetFaces() const;
 private:
 	vertexList vertices;
 	faceList faces;

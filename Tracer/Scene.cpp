@@ -34,3 +34,11 @@ RaycastResult Scene::Intersect(Ray ray) {
 	}
 	return result;
 }
+
+const Scene::vertexList& Scene::GetVertices() const {
+	return vertices;
+}
+
+const Scene::faceList& Scene::GetFaces() const {
+	return faces;
+}
