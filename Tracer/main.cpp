@@ -3,6 +3,7 @@
 #include "SceneFactory.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "Image.h"
 #include <cstdio>
 #include <string>
 
@@ -19,7 +20,7 @@ int main(int argc, char* argv[]) {
 
 	const int width = 800;
 	const int height = 800;
-	std::vector<int> image(width * height);
+	Image image(width, height);
 
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
@@ -31,11 +32,11 @@ int main(int argc, char* argv[]) {
 				float maxDist = 5.0f;
 				float visualDistance = glm::min(result.distance, maxDist);
 				visualDistance = glm::max(0.0f, visualDistance);
-				int intensity = static_cast<int>(255.0f - 255.0f * visualDistance / maxDist);
-				image[width * y + x] = intensity;
+				float intensity = 255.0f - 255.0f * visualDistance / maxDist;
+				image.SetPixel(x, y, intensity);
 			}
 			else {
-				image[width * y + x] = 0;
+				image.SetPixel(x, y, 0.0f);
 			}
 		}
 	}
@@ -46,7 +47,7 @@ int main(int argc, char* argv[]) {
 	std::fprintf(outFile, "255\n");
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			std::fprintf(outFile, "%i", image[width * y + x]);
+			std::fprintf(outFile, "%i", static_cast<int>(image.GetPixel(x, y)));
 			std::fprintf(outFile, " ");
 		}
 		std::fprintf(outFile, "\n");

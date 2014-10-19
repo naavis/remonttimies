@@ -24,3 +24,7 @@ void Camera::LookAt(glm::vec3 point) {
 	glm::vec3 direction = point - position;
 	this->direction = glm::normalize(direction);
 }
+
+glm::vec3 Camera::GetDirection() const {
+	return this->direction;
+}
