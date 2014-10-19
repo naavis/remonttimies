@@ -5,7 +5,7 @@
 class Camera
 {
 public:
-	Camera(glm::vec3 position, glm::vec3 direction, float fieldOfViewDegrees);
+	Camera(glm::vec3 position, float fieldOfViewDegrees);
 	Ray GenerateRay(float x, float y);
 	void LookAt(glm::vec3 point);
 private:

@@ -2,10 +2,10 @@
 #include "Ray.h"
 #include <glm/glm.hpp>
 
-Camera::Camera(glm::vec3 position, glm::vec3 direction, float fieldOfViewDegrees)
+Camera::Camera(glm::vec3 position, float fieldOfViewDegrees)
 	: fovRadians(glm::radians(fieldOfViewDegrees)),
 	position(position),
-	direction(glm::normalize(direction))
+	direction(glm::vec3(0.0f, 0.0f, 1.0f))
 {
 }
 

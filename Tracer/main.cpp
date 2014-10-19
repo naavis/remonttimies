@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
 
 	std::string filename(argv[1]);
 	Scene scene = SceneFactory::CreateFromFile(filename);
-	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), glm::vec3(0.0f, 0.0f, 1.0f), 80.0f);
+	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), 80.0f);
 	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
 
 	const int width = 800;
