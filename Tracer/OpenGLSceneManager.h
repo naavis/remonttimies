@@ -12,7 +12,12 @@ public:
 
 private:
 	void ClearBuffers();
+	void DeleteShaders();
+	void InitShaders();
 	std::shared_ptr<Scene> scene;
 	GLuint sceneVBO;
 	GLuint elementBO;
+	GLuint shaderProgram;
+	GLuint fragmentShader;
+	GLuint vertexShader;
 };
