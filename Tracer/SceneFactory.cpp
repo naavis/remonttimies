@@ -5,7 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-Scene SceneFactory::CreateFromFile(const std::string& filename) {
+std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename) {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filename,
 		aiProcess_Triangulate |
@@ -14,7 +14,7 @@ Scene SceneFactory::CreateFromFile(const std::string& filename) {
 
 	Scene::vertexList vertices = GetVertices(scene);
 	Scene::faceList faces = GetFaces(scene);
-	return Scene(vertices, faces);
+	return std::shared_ptr<Scene>(new Scene(vertices, faces));
 }
 
 Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {

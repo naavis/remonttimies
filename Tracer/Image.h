@@ -12,4 +12,3 @@ private:
 	unsigned int height;
 	std::vector<float> imageContents;
 };
-

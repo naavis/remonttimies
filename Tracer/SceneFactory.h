@@ -4,11 +4,12 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include <memory>
 
 class SceneFactory
 {
 public:
-	static Scene CreateFromFile(const std::string& filename);
+	static std::shared_ptr<Scene> CreateFromFile(const std::string& filename);
 private:
 	static Scene::vertexList GetVertices(const aiScene* scene);
 	static Scene::faceList GetFaces(const aiScene* scene);

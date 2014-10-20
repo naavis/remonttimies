@@ -87,12 +87,14 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OpenGLSceneManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="OpenGLSceneManager.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="RaycastResult.h" />
     <ClInclude Include="Scene.h" />

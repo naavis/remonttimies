@@ -6,6 +6,7 @@
 #include "Image.h"
 #include <cstdio>
 #include <string>
+#include "OpenGLSceneManager.h"
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -14,7 +15,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	std::string filename(argv[1]);
-	Scene scene = SceneFactory::CreateFromFile(filename);
+	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
 	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), 80.0f);
 	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
 
@@ -27,7 +28,7 @@ int main(int argc, char* argv[]) {
 			float localX = 2.0f * static_cast<float>(x) / width - 1.0f;
 			float localY = 2.0f * static_cast<float>(y) / height - 1.0f;
 			Ray ray = camera.GenerateRay(localX, -localY);
-			RaycastResult result = scene.Intersect(ray);
+			RaycastResult result = scene->Intersect(ray);
 			if (result.hit) {
 				float maxDist = 5.0f;
 				float visualDistance = glm::min(result.distance, maxDist);
@@ -41,7 +42,7 @@ int main(int argc, char* argv[]) {
 		}
 	}
 
-	FILE* outFile = fopen("output.pgm", "w");
+	FILE* outFile = std::fopen("output.pgm", "w");
 	std::fprintf(outFile, "P2\n");
 	std::fprintf(outFile, "%i %i\n", width, height);
 	std::fprintf(outFile, "255\n");
@@ -73,19 +74,12 @@ int main(int argc, char* argv[]) {
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
 	glUseProgram(shaderProgram);
-	GLuint sceneVBO;
-	glGenBuffers(1, &sceneVBO);
-	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
-	glBufferData(GL_ARRAY_BUFFER, scene.GetVertices().size() * sizeof(glm::vec3), &(scene.GetVertices()[0]), GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
-	GLuint elementBuffer;
-	glGenBuffers(1, &elementBuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene.GetFaces().size() * sizeof(glm::ivec3), &(scene.GetFaces()[0]), GL_STATIC_DRAW);
+
+	OpenGLSceneManager oglSceneManager;
+	oglSceneManager.SetScene(scene);
 
 	while (!glfwWindowShouldClose(window)) {
-		glDrawElements(GL_TRIANGLES, scene.GetFaces().size(), GL_UNSIGNED_INT, 0);
+		oglSceneManager.Render();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
