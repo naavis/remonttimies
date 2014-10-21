@@ -66,13 +66,34 @@ int main(int argc, char* argv[]) {
 	oglSceneManager.SetScene(scene);
 
 	while (!glfwWindowShouldClose(window)) {
-		auto projectionMatrix = camera.GetProjectionMatrix();
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 		auto viewMatrix = camera.GetViewMatrix();
+		auto projectionMatrix = camera.GetProjectionMatrix();
 		oglSceneManager.Render(viewMatrix, projectionMatrix);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
+		}
+
+		float speed = 0.01f;
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+			auto newPosition = camera.GetPosition() + glm::vec3(speed, 0.0f, 0.0f);
+			camera.SetPosition(newPosition);
+		} else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+			auto newPosition = camera.GetPosition() + glm::vec3(-speed, 0.0, 0.0f);
+			camera.SetPosition(newPosition);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+			auto newPosition = camera.GetPosition() + glm::vec3(0.0f, 0.0f, speed);
+			camera.SetPosition(newPosition);
+		}
+		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+			auto newPosition = camera.GetPosition() + glm::vec3(0.0f, 0.0f, -speed);
+			camera.SetPosition(newPosition);
+		}
 	}
 
 	glfwTerminate();

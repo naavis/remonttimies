@@ -66,7 +66,7 @@ void OpenGLSceneManager::InitShaders()
 		"#version 150\n"
 		"out vec4 outColor;"
 		"void main() {"
-		"	outColor = vec4(1.0, 1.0, 1.0, 1.0);"
+		"	outColor = vec4(1.0);"
 		"}";
 	this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
