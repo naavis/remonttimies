@@ -16,11 +16,12 @@ int main(int argc, char* argv[]) {
 
 	std::string filename(argv[1]);
 	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
-	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), 80.0f);
-	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
-
 	const int width = 800;
 	const int height = 800;
+	const float vFov = 80.0f;
+	float aspectRatio = static_cast<float>(width) / height;
+	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), vFov, aspectRatio);
+	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
 	Image image(width, height);
 
 	for (int y = 0; y < height; ++y) {
@@ -65,7 +66,9 @@ int main(int argc, char* argv[]) {
 	oglSceneManager.SetScene(scene);
 
 	while (!glfwWindowShouldClose(window)) {
-		oglSceneManager.Render();
+		auto projectionMatrix = camera.GetProjectionMatrix();
+		auto viewMatrix = camera.GetViewMatrix();
+		oglSceneManager.Render(viewMatrix, projectionMatrix);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
