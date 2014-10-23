@@ -24,6 +24,6 @@ private:
 	GLuint vertexShader;
 	GLuint viewMatrixID;
 	GLuint projectionMatrixID;
-	GLuint vertexAttrib;
-	GLuint normalAttrib;
+	GLuint vertexAttribLoc;
+	GLuint normalAttribLoc;
 };

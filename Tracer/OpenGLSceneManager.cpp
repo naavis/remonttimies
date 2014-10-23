@@ -9,15 +9,15 @@
 #define GLSL(src) "#version 330 core\n" #src
 
 OpenGLSceneManager::OpenGLSceneManager()
-	: sceneVBO(0), elementBO(0), vertexAttrib(0), normalAttrib(1)
+	: sceneVBO(0), elementBO(0), vertexAttribLoc(0), normalAttribLoc(1)
 {
 	InitShaders();
 }
 
 void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
 {
-	glEnableVertexAttribArray(vertexAttrib);
-	glEnableVertexAttribArray(normalAttrib);
+	glEnableVertexAttribArray(vertexAttribLoc);
+	glEnableVertexAttribArray(normalAttribLoc);
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(this->viewMatrixID, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(this->projectionMatrixID, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -26,8 +26,8 @@ void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix
 	if (this->scene) {
 		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * sizeof(glm::ivec3), GL_UNSIGNED_INT, 0);
 	}
-	glDisableVertexAttribArray(vertexAttrib);
-	glDisableVertexAttribArray(normalAttrib);
+	glDisableVertexAttribArray(vertexAttribLoc);
+	glDisableVertexAttribArray(normalAttribLoc);
 }
 
 void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
@@ -37,12 +37,12 @@ void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
 	glGenBuffers(1, &sceneVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
 	glBufferData(GL_ARRAY_BUFFER, scene->GetVertices().size() * sizeof(Vertex), &(scene->GetVertices()[0]), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(vertexAttrib);
-	glEnableVertexAttribArray(normalAttrib);
-	glVertexAttribPointer(vertexAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
-	glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
-	glDisableVertexAttribArray(vertexAttrib);
-	glDisableVertexAttribArray(normalAttrib);
+	glEnableVertexAttribArray(vertexAttribLoc);
+	glEnableVertexAttribArray(normalAttribLoc);
+	glVertexAttribPointer(vertexAttribLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(normalAttribLoc, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
+	glDisableVertexAttribArray(vertexAttribLoc);
+	glDisableVertexAttribArray(normalAttribLoc);
 	glGenBuffers(1, &elementBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene->GetFaces().size() * sizeof(glm::ivec3), &(scene->GetFaces()[0]), GL_STATIC_DRAW);
@@ -67,17 +67,21 @@ void OpenGLSceneManager::InitShaders()
 {
 	const char* vertexShaderSrc = GLSL(
 		in vec3 position;
+		in vec3 normal;
+		varying vec3 vNormal;
 		uniform mat4 viewMatrix;
 		uniform mat4 projectionMatrix;
 		void main() {
+			vNormal = normalize(normal);
 			gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);
 		}
 	);
 
 	const char* fragmentShaderSrc = GLSL(
 		out vec4 outColor;
+		varying vec3 vNormal;
 		void main() {
-			outColor = vec4(1.0);
+			outColor = vec4(vNormal, 1.0);
 		}
 	);
 
@@ -96,6 +100,8 @@ void OpenGLSceneManager::InitShaders()
 	glUseProgram(shaderProgram);
 	this->viewMatrixID = glGetUniformLocation(shaderProgram, "viewMatrix");
 	this->projectionMatrixID = glGetUniformLocation(shaderProgram, "projectionMatrix");
+	this->vertexAttribLoc = glGetAttribLocation(shaderProgram, "position");
+	this->normalAttribLoc = glGetAttribLocation(shaderProgram, "normal");
 }
 
 void OpenGLSceneManager::DeleteShaders()
