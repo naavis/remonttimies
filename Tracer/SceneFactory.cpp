@@ -4,6 +4,7 @@
 #include <assimp/postprocess.h>
 #include <glm/glm.hpp>
 #include <vector>
+#include "Vertex.h"
 
 std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename) {
 	Assimp::Importer importer;
@@ -31,7 +32,10 @@ Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {
 		struct aiMesh* assimpMesh = scene->mMeshes[meshIndex];
 		for (unsigned int vertexIndex = 0; vertexIndex < assimpMesh->mNumVertices; ++vertexIndex) {
 			aiVector3D assimpVertex = assimpMesh->mVertices[vertexIndex];
-			glm::vec3 vertex(assimpVertex.x, assimpVertex.y, assimpVertex.z);
+			aiVector3D assimpNormal = assimpMesh->mNormals[vertexIndex];
+			Vertex vertex;
+			vertex.position = glm::vec3(assimpVertex.x, assimpVertex.y, assimpVertex.z);
+			vertex.normal = glm::vec3(assimpNormal.x, assimpNormal.y, assimpNormal.z);
 			vertices.push_back(vertex);
 		}
 	}

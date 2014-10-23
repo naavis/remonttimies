@@ -4,15 +4,18 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <cstdio>
+#include "Vertex.h"
 
 OpenGLSceneManager::OpenGLSceneManager()
-	: sceneVBO(0), elementBO(0)
+	: sceneVBO(0), elementBO(0), vertexAttrib(0), normalAttrib(1)
 {
 	InitShaders();
 }
 
 void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
 {
+	glEnableVertexAttribArray(vertexAttrib);
+	glEnableVertexAttribArray(normalAttrib);
 	glUseProgram(shaderProgram);
 	glUniformMatrix4fv(this->viewMatrixID, 1, GL_FALSE, glm::value_ptr(viewMatrix));
 	glUniformMatrix4fv(this->projectionMatrixID, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -21,6 +24,8 @@ void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix
 	if (this->scene) {
 		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * sizeof(glm::ivec3), GL_UNSIGNED_INT, 0);
 	}
+	glDisableVertexAttribArray(vertexAttrib);
+	glDisableVertexAttribArray(normalAttrib);
 }
 
 void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
@@ -29,9 +34,9 @@ void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
 	this->scene = scene;
 	glGenBuffers(1, &sceneVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
-	glBufferData(GL_ARRAY_BUFFER, scene->GetVertices().size() * sizeof(glm::vec3), &(scene->GetVertices()[0]), GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-	glEnableVertexAttribArray(0);
+	glBufferData(GL_ARRAY_BUFFER, scene->GetVertices().size() * sizeof(Vertex), &(scene->GetVertices()[0]), GL_STATIC_DRAW);
+	glVertexAttribPointer(vertexAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
+	glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glGenBuffers(1, &elementBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene->GetFaces().size() * sizeof(glm::ivec3), &(scene->GetFaces()[0]), GL_STATIC_DRAW);

@@ -3,11 +3,12 @@
 #include "RaycastResult.h"
 #include <glm/glm.hpp>
 #include <vector>
+#include "Vertex.h"
 
 class Scene
 {
 public:
-	typedef std::vector<glm::vec3> vertexList;
+	typedef std::vector<Vertex> vertexList;
 	typedef std::vector<glm::ivec3> faceList;
 
 	Scene(vertexList vertices, faceList faces);
