@@ -19,7 +19,7 @@ void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	if (this->scene) {
-		glDrawElements(GL_TRIANGLES, scene->GetFaces().size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * sizeof(glm::ivec3), GL_UNSIGNED_INT, 0);
 	}
 }
 

@@ -88,6 +88,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OpenGLSceneManager.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
   </ItemGroup>
@@ -97,6 +98,7 @@
     <ClInclude Include="OpenGLSceneManager.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="RaycastResult.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
   </ItemGroup>

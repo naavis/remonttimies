@@ -18,8 +18,8 @@ int main(int argc, char* argv[]) {
 	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
 	const int width = 800;
 	const int height = 800;
-	const float vFov = 80.0f;
 	float aspectRatio = static_cast<float>(width) / height;
+	const float vFov = 80.0f;
 	Camera camera(glm::vec3(1.1, 0.0f, -2.0f), vFov, aspectRatio);
 	camera.LookAt(glm::vec3(0.0f, -0.2f, 0.0f));
 	Image image(width, height);
