@@ -10,6 +10,7 @@ std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename)
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(filename,
 		aiProcess_Triangulate |
+		aiProcess_GenNormals |
 		aiProcess_ImproveCacheLocality |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_PreTransformVertices);

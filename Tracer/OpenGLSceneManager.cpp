@@ -35,8 +35,12 @@ void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
 	glGenBuffers(1, &sceneVBO);
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
 	glBufferData(GL_ARRAY_BUFFER, scene->GetVertices().size() * sizeof(Vertex), &(scene->GetVertices()[0]), GL_STATIC_DRAW);
-	glVertexAttribPointer(vertexAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), 0);
-	glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(vertexAttrib);
+	glEnableVertexAttribArray(normalAttrib);
+	glVertexAttribPointer(vertexAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	glVertexAttribPointer(normalAttrib, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(glm::vec3)));
+	glDisableVertexAttribArray(vertexAttrib);
+	glDisableVertexAttribArray(normalAttrib);
 	glGenBuffers(1, &elementBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene->GetFaces().size() * sizeof(glm::ivec3), &(scene->GetFaces()[0]), GL_STATIC_DRAW);
