@@ -6,6 +6,8 @@
 #include <cstdio>
 #include "Vertex.h"
 
+#define GLSL(src) "#version 330 core\n" #src
+
 OpenGLSceneManager::OpenGLSceneManager()
 	: sceneVBO(0), elementBO(0), vertexAttrib(0), normalAttrib(1)
 {
@@ -63,20 +65,22 @@ void OpenGLSceneManager::ClearBuffers() {
 
 void OpenGLSceneManager::InitShaders()
 {
-	const char* vertexShaderSrc =
-		"#version 150\n"
-		"in vec3 position;"
-		"uniform mat4 viewMatrix;"
-		"uniform mat4 projectionMatrix;"
-		"void main() {" 
-		"	gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);"
-		"}";
-	const char* fragmentShaderSrc =
-		"#version 150\n"
-		"out vec4 outColor;"
-		"void main() {"
-		"	outColor = vec4(1.0);"
-		"}";
+	const char* vertexShaderSrc = GLSL(
+		in vec3 position;
+		uniform mat4 viewMatrix;
+		uniform mat4 projectionMatrix;
+		void main() {
+			gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0);
+		}
+	);
+
+	const char* fragmentShaderSrc = GLSL(
+		out vec4 outColor;
+		void main() {
+			outColor = vec4(1.0);
+		}
+	);
+
 	this->vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSrc, nullptr);
 	glCompileShader(vertexShader);
