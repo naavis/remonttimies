@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
 	std::string filename(argv[1]);
 	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
 
-	const int width = 800;
-	const int height = 600;
+	const int width = 1280;
+	const int height = 768;
 
 	float aspectRatio = static_cast<float>(width) / height;
 	const float vFov = 70.0f;
@@ -28,6 +28,7 @@ int main(int argc, char* argv[]) {
 	Renderer renderer(scene, camera);
 
 	glfwInit();
+	glfwWindowHint(GLFW_RESIZABLE, 0);
 	auto window = glfwCreateWindow(width, height, "Remonttimies", nullptr, nullptr);
 	glfwMakeContextCurrent(window);
 	glewExperimental = GL_TRUE;
@@ -53,20 +54,23 @@ int main(int argc, char* argv[]) {
 
 		float speed = 0.01f;
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			auto newPosition = camera->GetPosition() + glm::vec3(speed, 0.0f, 0.0f);
-			camera->SetPosition(newPosition);
+			camera->MoveLocalX(-speed);
 		} else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			auto newPosition = camera->GetPosition() + glm::vec3(-speed, 0.0, 0.0f);
-			camera->SetPosition(newPosition);
+			camera->MoveLocalX(speed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			auto newPosition = camera->GetPosition() + glm::vec3(0.0f, 0.0f, speed);
-			camera->SetPosition(newPosition);
+			camera->MoveLocalZ(-speed);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			auto newPosition = camera->GetPosition() + glm::vec3(0.0f, 0.0f, -speed);
-			camera->SetPosition(newPosition);
+			camera->MoveLocalZ(speed);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+			camera->MoveLocalY(speed);
+		}
+		else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+			camera->MoveLocalY(-speed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {

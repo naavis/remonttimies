@@ -50,3 +50,23 @@ glm::vec3 Camera::GetPosition() const
 {
 	return this->position;
 }
+
+void Camera::MoveLocalZ(float amount)
+{
+	SetPosition(GetPosition() - amount * GetDirection());
+}
+
+void Camera::MoveLocalY(float amount)
+{
+	auto glocalUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	auto right = glm::cross(GetDirection(), glocalUp);
+	auto localUp = glm::normalize(glm::cross(right, GetDirection()));
+	SetPosition(GetPosition() + amount * localUp);
+}
+
+void Camera::MoveLocalX(float amount)
+{
+	auto localUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	auto right = glm::normalize(glm::cross(GetDirection(), localUp));
+	SetPosition(GetPosition() + amount * right);
+}
