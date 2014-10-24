@@ -13,8 +13,8 @@ Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)
 Image Renderer::Render(unsigned int width, unsigned int height)
 {
 	Image image(width, height);
-	for (int y = 0; y < height; ++y) {
-		for (int x = 0; x < width; ++x) {
+	for (unsigned int y = 0; y < height; ++y) {
+		for (unsigned int x = 0; x < width; ++x) {
 			float localX = 2.0f * static_cast<float>(x) / width - 1.0f;
 			float localY = 2.0f * static_cast<float>(y) / height - 1.0f;
 			Ray ray = camera->GenerateRay(localX, -localY);

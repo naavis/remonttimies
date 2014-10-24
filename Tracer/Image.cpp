@@ -15,3 +15,13 @@ float Image::GetPixel(unsigned int x, unsigned int y) const
 {
 	return imageContents[y * width + x];
 }
+
+unsigned int Image::GetWidth() const
+{
+	return this->width;
+}
+
+unsigned int Image::GetHeight() const
+{
+	return this->height;
+}
