@@ -11,6 +11,8 @@ public:
 	void Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
 
 private:
+	OpenGLSceneManager(const OpenGLSceneManager& other) {}
+	OpenGLSceneManager& operator=(OpenGLSceneManager other) {}
 	void ClearBuffers();
 	void DeleteShaders();
 	void InitShaders();
