@@ -24,7 +24,7 @@ void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	if (this->scene) {
-		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * sizeof(glm::ivec3), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * 3, GL_UNSIGNED_INT, 0);
 	}
 	glDisableVertexAttribArray(vertexAttribLoc);
 	glDisableVertexAttribArray(normalAttribLoc);
@@ -81,7 +81,7 @@ void OpenGLSceneManager::InitShaders()
 		out vec4 outColor;
 		varying vec3 vNormal;
 		void main() {
-			outColor = vec4(vNormal, 1.0);
+			outColor = vec4(0.5 * vNormal + 0.5, 1.0);
 		}
 	);
 
