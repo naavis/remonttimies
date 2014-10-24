@@ -1,7 +1,7 @@
 #pragma once
 #include "Image.h"
 
-class PGMImageFile {
+class PGMFile {
 public:
 	static void Save(Image image, std::string filename);
 };

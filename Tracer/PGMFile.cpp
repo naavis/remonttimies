@@ -1,8 +1,8 @@
-#include "PGMImageFile.h"
+#include "PGMFile.h"
 #include <cstdio>
 #include <string>
 
-void PGMImageFile::Save(Image image, std::string filename)
+void PGMFile::Save(Image image, std::string filename)
 {
 	std::string extension = ".pgm";
 	std::string extendedFilename;

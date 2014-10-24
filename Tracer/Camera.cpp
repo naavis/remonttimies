@@ -70,3 +70,19 @@ void Camera::MoveLocalX(float amount)
 	auto right = glm::normalize(glm::cross(GetDirection(), localUp));
 	SetPosition(GetPosition() + amount * right);
 }
+
+void Camera::Pitch(float amount)
+{
+	auto glocalUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	auto right = glm::cross(GetDirection(), glocalUp);
+	auto rotationMatrix = glm::rotate(50.0f * amount, right);
+	glm::vec4 newDirection = rotationMatrix * glm::vec4(GetDirection(), 1.0f);
+	this->direction = glm::vec3(newDirection.x, newDirection.y, newDirection.z);
+}
+
+void Camera::Yaw(float amount)
+{
+	auto rotationMatrix = glm::rotate(50.0f * amount, glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::vec4 newDirection = rotationMatrix * glm::vec4(GetDirection(), 1.0f);
+	this->direction = glm::vec3(newDirection.x, newDirection.y, newDirection.z);
+}

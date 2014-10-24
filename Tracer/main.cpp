@@ -8,7 +8,7 @@
 #include <string>
 #include "OpenGLSceneManager.h"
 #include "Renderer.h"
-#include "PGMImageFile.h"
+#include "PGMFile.h"
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -73,12 +73,26 @@ int main(int argc, char* argv[]) {
 			camera->MoveLocalY(-speed);
 		}
 
+		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+			camera->Pitch(-speed);
+		}
+		else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+			camera->Pitch(speed);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+			camera->Yaw(speed);
+		}
+		else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+			camera->Yaw(-speed);
+		}
+
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
 			std::printf("Rendering... ");
 			Image image = renderer.Render(width, height);
 			std::printf("Done!\n");
 			std::printf("Saving to file...\n");
-			PGMImageFile::Save(image, "output");
+			PGMFile::Save(image, "output");
 		}
 	}
 

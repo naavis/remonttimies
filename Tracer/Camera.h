@@ -12,6 +12,8 @@ public:
 	void MoveLocalZ(float amount);
 	void MoveLocalY(float amount);
 	void MoveLocalX(float amount);
+	void Pitch(float amount);
+	void Yaw(float amount);
 	glm::vec3 GetDirection() const;
 	glm::vec3 GetPosition() const;
 	glm::mat4 GetProjectionMatrix() const;
