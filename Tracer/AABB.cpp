@@ -18,6 +18,9 @@ AABB::AABB(AABB::triangleIterator startIter, AABB::triangleIterator endIter, con
 	this->Add(startIter, endIter, scene);
 }
 
+AABB::AABB()
+{
+}
 
 void AABB::Add(AABB::triangleIterator startIter, AABB::triangleIterator endIter, const std::shared_ptr<Scene> scene)
 {
@@ -27,6 +30,13 @@ void AABB::Add(AABB::triangleIterator startIter, AABB::triangleIterator endIter,
 			Vertex vertex = scene->GetVertices()[vertexIndex];
 			this->Add(vertex);
 		}
+	}
+}
+
+void AABB::Add(const glm::ivec3 triangle, const std::shared_ptr<Scene> scene)
+{
+	for (auto i = 0u; i < 3; ++i) {
+		this->Add(scene->GetVertices()[triangle[i]]);
 	}
 }
 
@@ -67,4 +77,13 @@ RaycastResult AABB::Intersect(Ray ray) const
 	}
 
 	return result;
+}
+
+float AABB::GetSurfaceArea() const
+{
+	auto edgeLengths = maxCorner - minCorner;
+	float bottom = edgeLengths.x * edgeLengths.z;
+	float side = edgeLengths.y * edgeLengths.z;
+	float front = edgeLengths.x * edgeLengths.y;
+	return 2.0f * (bottom + side + front);
 }

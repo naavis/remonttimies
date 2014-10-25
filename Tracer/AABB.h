@@ -12,8 +12,10 @@ public:
 	AABB();
 	AABB(triangleIterator startIter, triangleIterator endIter, const std::shared_ptr<Scene> scene);
 	void Add(Vertex vertex);
+	void Add(const glm::ivec3 triangle, const std::shared_ptr<Scene> scene);
 	void Add(triangleIterator startIter, triangleIterator endIter, const std::shared_ptr<Scene> scene);
 	RaycastResult Intersect(Ray ray) const;
+	float GetSurfaceArea() const;
 private:
 	glm::vec3 minCorner;
 	glm::vec3 maxCorner;

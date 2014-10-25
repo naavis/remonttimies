@@ -22,11 +22,6 @@ int main(int argc, char* argv[]) {
 	const int width = 1280;
 	const int height = 768;
 
-	float aspectRatio = static_cast<float>(width) / height;
-	const float vFov = 70.0f;
-	std::shared_ptr<Camera> camera(new Camera(glm::vec3(0.0, 0.0f, -2.0f), vFov, aspectRatio));
-	Renderer renderer(scene, camera);
-
 	glfwInit();
 	glfwWindowHint(GLFW_RESIZABLE, 0);
 	auto window = glfwCreateWindow(width, height, "Remonttimies", nullptr, nullptr);
@@ -38,6 +33,11 @@ int main(int argc, char* argv[]) {
 
 	OpenGLSceneManager oglSceneManager;
 	oglSceneManager.SetScene(scene);
+
+	float aspectRatio = static_cast<float>(width) / height;
+	const float vFov = 70.0f;
+	std::shared_ptr<Camera> camera(new Camera(glm::vec3(0.0, 0.0f, -2.0f), vFov, aspectRatio));
+	Renderer renderer(scene, camera);
 
 	while (!glfwWindowShouldClose(window)) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
