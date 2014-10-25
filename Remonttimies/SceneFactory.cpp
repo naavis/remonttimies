@@ -19,7 +19,7 @@ std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename)
 	Scene::vertexList vertices = GetVertices(scene);
 	Scene::triangleList faces = GetFaces(scene);
 	Scene::materialList materials = GetMaterials(scene);
-	return std::shared_ptr<Scene>(new Scene(vertices, faces));
+	return std::shared_ptr<Scene>(new Scene(vertices, faces, materials));
 }
 
 Scene::materialList SceneFactory::GetMaterials(const aiScene* scene) {

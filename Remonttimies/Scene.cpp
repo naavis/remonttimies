@@ -8,8 +8,8 @@
 #include <algorithm>
 #include "Vertex.h"
 
-Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> triangles)
-	: vertices(vertices), triangles(triangles)
+Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> triangles, materialList materials)
+	: vertices(vertices), triangles(triangles), materials(materials)
 {
 }
 
@@ -61,4 +61,9 @@ void Scene::SortTriangles(unsigned int startIndex, unsigned int endIndex, unsign
 		}
 		return aSum < bSum;
 	});
+}
+
+const Material& Scene::GetMaterial(unsigned int index)
+{
+	return materials[index];
 }
