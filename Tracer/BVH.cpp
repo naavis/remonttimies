@@ -13,7 +13,7 @@ BVH::BVH(std::shared_ptr<Scene> scene)
 	rightNode(nullptr),
 	isLeafNode(false)
 {
-	BuildTree();
+	Initialize();
 }
 
 BVH::BVH(std::shared_ptr<Scene> scene, unsigned int startIndex, unsigned int endIndex)
@@ -24,6 +24,11 @@ BVH::BVH(std::shared_ptr<Scene> scene, unsigned int startIndex, unsigned int end
 	rightNode(nullptr),
 	isLeafNode(false)
 {
+	Initialize();
+}
+
+void BVH::Initialize() {
+	bbox = AABB(scene->GetFaces().cbegin() + startIndex, scene->GetFaces().cbegin() + endIndex, scene);
 	const unsigned int trianglesInLeaf = 16;
 	startIndex = glm::max(startIndex, 0u);
 	endIndex = glm::min(endIndex, scene->GetFaces().size());
@@ -88,4 +93,9 @@ void BVH::BuildTree()
 bool BVH::IsLeafNode() const
 {
 	return isLeafNode;
+}
+
+RaycastResult BVH::Intersect(Ray ray) const
+{
+
 }
