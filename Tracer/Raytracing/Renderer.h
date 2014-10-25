@@ -1,8 +1,8 @@
 #pragma once
 #include "Image.h"
 #include <memory>
-#include "Scene.h"
-#include "Camera.h"
+#include "../Scene.h"
+#include "../Camera.h"
 #include "BVH.h"
 
 class Renderer {

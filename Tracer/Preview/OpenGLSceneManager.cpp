@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <cstdio>
-#include "Vertex.h"
+#include "../Vertex.h"
 
 #define GLSL(src) "#version 330 core\n" #src
 

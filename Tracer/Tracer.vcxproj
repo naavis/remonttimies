@@ -84,27 +84,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AABB.cpp" />
-    <ClCompile Include="BVH.cpp" />
+    <ClCompile Include="Raytracing\AABB.cpp" />
+    <ClCompile Include="Raytracing\BVH.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="Raytracing\Image.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OpenGLSceneManager.cpp" />
+    <ClCompile Include="Preview\OpenGLSceneManager.cpp" />
     <ClCompile Include="PGMFile.cpp" />
-    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Raytracing\Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AABB.h" />
-    <ClInclude Include="BVH.h" />
+    <ClInclude Include="Raytracing\AABB.h" />
+    <ClInclude Include="Raytracing\BVH.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Image.h" />
-    <ClInclude Include="OpenGLSceneManager.h" />
+    <ClInclude Include="Raytracing\Image.h" />
+    <ClInclude Include="Preview\OpenGLSceneManager.h" />
     <ClInclude Include="PGMFile.h" />
-    <ClInclude Include="Ray.h" />
-    <ClInclude Include="RaycastResult.h" />
-    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Raytracing\Ray.h" />
+    <ClInclude Include="Raytracing\RaycastResult.h" />
+    <ClInclude Include="Raytracing\Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Vertex.h" />

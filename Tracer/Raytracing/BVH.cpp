@@ -1,8 +1,8 @@
 #include "BVH.h"
-#include "Scene.h"
+#include "../Scene.h"
 #include <memory>
 #include <glm/glm.hpp>
-#include "Vertex.h"
+#include "../Vertex.h"
 #include "AABB.h"
 #include "RaycastResult.h"
 #include <glm/gtx/intersect.hpp>

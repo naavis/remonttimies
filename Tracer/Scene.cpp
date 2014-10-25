@@ -1,6 +1,6 @@
 #include "Scene.h"
-#include "Ray.h"
-#include "RaycastResult.h"
+#include "Raytracing/Ray.h"
+#include "Raytracing/RaycastResult.h"
 #include <vector>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>

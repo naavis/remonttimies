@@ -1,5 +1,5 @@
 #include "Camera.h"
-#include "Ray.h"
+#include "Raytracing/Ray.h"
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 

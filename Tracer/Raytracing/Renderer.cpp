@@ -1,8 +1,8 @@
 #include "Renderer.h"
 #include "Image.h"
 #include <memory>
-#include "Scene.h"
-#include "Camera.h"
+#include "../Scene.h"
+#include "../Camera.h"
 #include "BVH.h"
 
 Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)

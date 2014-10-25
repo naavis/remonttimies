@@ -4,7 +4,7 @@
 #include "Ray.h"
 #include <limits>
 #include <algorithm>
-#include "Vertex.h"
+#include "../Vertex.h"
 #include <memory>
 
 void AABB::Add(Vertex vertex)

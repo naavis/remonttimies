@@ -3,7 +3,7 @@
 #include "RaycastResult.h"
 #include "Ray.h"
 #include <vector>
-#include "Scene.h"
+#include "../Scene.h"
 #include <memory>
 
 class AABB {

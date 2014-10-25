@@ -1,6 +1,6 @@
 #pragma once
-#include "Ray.h"
-#include "RaycastResult.h"
+#include "Raytracing/Ray.h"
+#include "Raytracing/RaycastResult.h"
 #include <glm/glm.hpp>
 #include <vector>
 #include "Vertex.h"

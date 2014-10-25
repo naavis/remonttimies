@@ -1,5 +1,5 @@
 #pragma once
-#include "Image.h"
+#include "Raytracing/Image.h"
 
 class PGMFile {
 public:

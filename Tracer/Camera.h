@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "Ray.h"
+#include "Raytracing/Ray.h"
 
 class Camera
 {

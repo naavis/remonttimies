@@ -3,11 +3,11 @@
 #include "SceneFactory.h"
 #include "Scene.h"
 #include "Camera.h"
-#include "Image.h"
+#include "Raytracing/Image.h"
 #include <cstdio>
 #include <string>
-#include "OpenGLSceneManager.h"
-#include "Renderer.h"
+#include "Preview/OpenGLSceneManager.h"
+#include "Raytracing/Renderer.h"
 #include "PGMFile.h"
 
 int main(int argc, char* argv[]) {
