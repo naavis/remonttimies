@@ -160,7 +160,7 @@ RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
 		if (hit) {
 			float candidateDistance = currentIntersectionResult.x;
 			if (candidateDistance < result.distance && candidateDistance > 0.0f) {
-				result.distance = candidateDistance;
+				result.distance = candidateDistance - epsilon;
 				result.position = ray.origin + (currentIntersectionResult.x - epsilon) * ray.direction;
 				result.barycentric = glm::vec3(currentIntersectionResult.y,	currentIntersectionResult.z,
 					1.0f - currentIntersectionResult.y - currentIntersectionResult.z);
@@ -170,7 +170,7 @@ RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
 				result.normal = result.barycentric.x * v0.normal +
 					result.barycentric.y * v1.normal +
 					result.barycentric.z * v2.normal;
-				glm::normalize(result.normal);
+				result.normal = glm::normalize(result.normal);
 				result.hit = true;
 			}
 		}
