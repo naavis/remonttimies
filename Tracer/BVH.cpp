@@ -110,7 +110,7 @@ RaycastResult BVH::Intersect(const Ray& ray) const
 	RaycastResult leftBBoxResult = leftNode->GetAABB().Intersect(ray);
 	RaycastResult rightBBoxResult = rightNode->GetAABB().Intersect(ray);
 
-	if (!leftBBoxResult.hit && !leftBBoxResult.hit)
+	if (!leftBBoxResult.hit && !rightBBoxResult.hit)
 		return RaycastResult();
 
 	if (leftBBoxResult.hit && !rightBBoxResult.hit) {
@@ -146,12 +146,12 @@ RaycastResult BVH::Intersect(const Ray& ray) const
 
 RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
 	RaycastResult result;
-	for (auto faceIter = scene->GetTriangles().cbegin() + startIndex;
-		faceIter != scene->GetTriangles().cbegin() + endIndex;
-		++faceIter) {
-		glm::vec3 v0 = scene->GetVertices()[(*faceIter).x].position;
-		glm::vec3 v1 = scene->GetVertices()[(*faceIter).y].position;
-		glm::vec3 v2 = scene->GetVertices()[(*faceIter).z].position;
+	for (auto triangleIter = scene->GetTriangles().cbegin() + startIndex;
+		triangleIter < scene->GetTriangles().cbegin() + endIndex;
+		++triangleIter) {
+		glm::vec3 v0 = scene->GetVertices()[(*triangleIter).x].position;
+		glm::vec3 v1 = scene->GetVertices()[(*triangleIter).y].position;
+		glm::vec3 v2 = scene->GetVertices()[(*triangleIter).z].position;
 		glm::vec3 currentIntersectionResult;
 		bool hit = glm::intersectLineTriangle(ray.origin, ray.direction, v0, v1, v2, currentIntersectionResult);
 		if (hit) {

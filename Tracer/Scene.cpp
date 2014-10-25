@@ -8,17 +8,17 @@
 #include <algorithm>
 #include "Vertex.h"
 
-Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> faces)
-	: vertices(vertices), faces(faces)
+Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> triangles)
+	: vertices(vertices), triangles(triangles)
 {
 }
 
 RaycastResult Scene::Intersect(const Ray& ray) {
 	RaycastResult result;
-	for (auto face : faces) {
-		glm::vec3 v0 = vertices[face.x].position;
-		glm::vec3 v1 = vertices[face.y].position;
-		glm::vec3 v2 = vertices[face.z].position;
+	for (auto triangle : triangles) {
+		glm::vec3 v0 = vertices[triangle.x].position;
+		glm::vec3 v1 = vertices[triangle.y].position;
+		glm::vec3 v2 = vertices[triangle.z].position;
 		glm::vec3 intersectionResult;
 		bool hit = glm::intersectLineTriangle(ray.origin, ray.direction, v0, v1, v2, intersectionResult);
 		if (hit) {
@@ -40,7 +40,7 @@ const Scene::vertexList& Scene::GetVertices() const {
 }
 
 const Scene::triangleList& Scene::GetTriangles() const {
-	return faces;
+	return triangles;
 }
 
 void Scene::SortTriangles(unsigned int startIndex, unsigned int endIndex, unsigned int axis)
@@ -50,7 +50,15 @@ void Scene::SortTriangles(unsigned int startIndex, unsigned int endIndex, unsign
 	if (endIndex > GetTriangles().size())
 		endIndex = GetTriangles().size();
 
-	std::sort(faces.begin() + startIndex, faces.begin() + endIndex, [axis](glm::ivec3 a, glm::ivec3 b) {
-		return a[axis] < b[axis];
+	std::sort(triangles.begin() + startIndex, triangles.begin() + endIndex, [axis, this](glm::ivec3 a, glm::ivec3 b) {
+		float aSum = 0.0f;
+		float bSum = 0.0f;
+		for (auto i = 0u; i < 3; ++i) {
+			Vertex aVertex = this->GetVertices()[a[i]];
+			Vertex bVertex = this->GetVertices()[b[i]];
+			aSum += aVertex.position[axis];
+			bSum += bVertex.position[axis];
+		}
+		return aSum < bSum;
 	});
 }

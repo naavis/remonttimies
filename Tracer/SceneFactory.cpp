@@ -45,28 +45,28 @@ Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {
 }
 
 Scene::triangleList SceneFactory::GetFaces(const aiScene* scene) {
-	int numFaces = 0;
+	int numTriangles = 0;
 	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		struct aiMesh* assimpMesh = scene->mMeshes[meshIndex];
-		numFaces += assimpMesh->mNumFaces;
+		numTriangles += assimpMesh->mNumFaces;
 	}
 
-	Scene::triangleList faces;
-	faces.reserve(numFaces);
+	Scene::triangleList triangles;
+	triangles.reserve(numTriangles);
 	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		struct aiMesh* assimpMesh = scene->mMeshes[meshIndex];
-		int meshStartIndex = GetHighestIndexIn(faces);
+		int meshStartIndex = GetHighestIndexIn(triangles);
 		for (unsigned int faceIndex = 0; faceIndex < assimpMesh->mNumFaces; ++faceIndex) {
 			struct aiFace assimpFace = assimpMesh->mFaces[faceIndex];
 			glm::ivec3 face(assimpFace.mIndices[0], assimpFace.mIndices[1], assimpFace.mIndices[2]);
 			if (meshStartIndex > 0) {
 				face += meshStartIndex + 1;
 			}
-			faces.push_back(face);
+			triangles.push_back(face);
 		}
 	}
 
-	return faces;
+	return triangles;
 }
 
 int SceneFactory::GetHighestIndexIn(const Scene::triangleList& list) {
