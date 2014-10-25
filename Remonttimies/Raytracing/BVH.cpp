@@ -145,26 +145,32 @@ RaycastResult BVH::Intersect(const Ray& ray) const
 }
 
 RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
+	const float epsilon = 0.001f;
 	RaycastResult result;
 	for (auto triangleIter = scene->GetTriangles().cbegin() + startIndex;
 		triangleIter < scene->GetTriangles().cbegin() + endIndex;
 		++triangleIter) {
-		glm::vec3 v0 = scene->GetVertices()[triangleIter->x].position;
-		glm::vec3 v1 = scene->GetVertices()[triangleIter->y].position;
-		glm::vec3 v2 = scene->GetVertices()[triangleIter->z].position;
+		Vertex v0 = scene->GetVertices()[triangleIter->x];
+		Vertex v1 = scene->GetVertices()[triangleIter->y];
+		Vertex v2 = scene->GetVertices()[triangleIter->z];
 		glm::vec3 currentIntersectionResult;
-		bool hit = glm::intersectLineTriangle(ray.origin, ray.direction, v0, v1, v2, currentIntersectionResult);
+		bool hit = glm::intersectLineTriangle(ray.origin,
+			ray.direction, v0.position, v1.position, v2.position,
+			currentIntersectionResult);
 		if (hit) {
 			float candidateDistance = currentIntersectionResult.x;
 			if (candidateDistance < result.distance && candidateDistance > 0.0f) {
 				result.distance = candidateDistance;
-				result.position = ray.origin + currentIntersectionResult.x * ray.direction;
-				result.barycentric = glm::vec3(currentIntersectionResult.y,
-					currentIntersectionResult.z,
+				result.position = ray.origin + (currentIntersectionResult.x - epsilon) * ray.direction;
+				result.barycentric = glm::vec3(currentIntersectionResult.y,	currentIntersectionResult.z,
 					1.0f - currentIntersectionResult.y - currentIntersectionResult.z);
 				/* HACK: Uses material from one vertex.
 				Materials should in any case be triangle-specific, not vertex-specific. */
 				result.materialIndex = scene->GetVertices()[triangleIter->x].materialIndex;
+				result.normal = result.barycentric.x * v0.normal +
+					result.barycentric.y * v1.normal +
+					result.barycentric.z * v2.normal;
+				glm::normalize(result.normal);
 				result.hit = true;
 			}
 		}

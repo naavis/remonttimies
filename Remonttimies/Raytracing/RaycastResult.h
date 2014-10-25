@@ -11,5 +11,6 @@ struct RaycastResult
 	glm::vec3 position;
 	glm::vec3 barycentric;
 	unsigned int materialIndex;
+	glm::vec3 normal;
 };
 
