@@ -82,6 +82,7 @@ void Camera::Pitch(float amount)
 
 void Camera::Yaw(float amount)
 {
+	// This is not exactly a real yaw, since the camera rotates around the global Y axis
 	auto rotationMatrix = glm::rotate(50.0f * amount, glm::vec3(0.0f, 1.0f, 0.0f));
 	glm::vec4 newDirection = rotationMatrix * glm::vec4(GetDirection(), 1.0f);
 	this->direction = glm::vec3(newDirection.x, newDirection.y, newDirection.z);
