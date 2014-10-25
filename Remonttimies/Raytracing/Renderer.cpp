@@ -21,10 +21,7 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 			Ray ray = camera->GenerateRay(localX, -localY);
 			RaycastResult result = bvhTree->Intersect(ray);
 			if (result.hit) {
-				float maxDist = 5.0f;
-				float visualDistance = glm::min(result.distance, maxDist);
-				visualDistance = glm::max(0.0f, visualDistance);
-				float intensity = 255.0f - 255.0f * visualDistance / maxDist;
+				float intensity = result.distance;
 				image.SetPixel(x, y, intensity);
 			}
 			else {

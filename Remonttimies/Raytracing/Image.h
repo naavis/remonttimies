@@ -9,6 +9,8 @@ public:
 	float GetPixel(unsigned int x, unsigned int y) const;
 	unsigned int GetWidth() const;
 	unsigned int GetHeight() const;
+	float GetMaximumValue() const;
+	Image GetNormalized() const;
 private:
 	unsigned int width;
 	unsigned int height;
