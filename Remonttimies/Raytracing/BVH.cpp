@@ -149,9 +149,9 @@ RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
 	for (auto triangleIter = scene->GetTriangles().cbegin() + startIndex;
 		triangleIter < scene->GetTriangles().cbegin() + endIndex;
 		++triangleIter) {
-		glm::vec3 v0 = scene->GetVertices()[(*triangleIter).x].position;
-		glm::vec3 v1 = scene->GetVertices()[(*triangleIter).y].position;
-		glm::vec3 v2 = scene->GetVertices()[(*triangleIter).z].position;
+		glm::vec3 v0 = scene->GetVertices()[triangleIter->x].position;
+		glm::vec3 v1 = scene->GetVertices()[triangleIter->y].position;
+		glm::vec3 v2 = scene->GetVertices()[triangleIter->z].position;
 		glm::vec3 currentIntersectionResult;
 		bool hit = glm::intersectLineTriangle(ray.origin, ray.direction, v0, v1, v2, currentIntersectionResult);
 		if (hit) {
@@ -162,6 +162,9 @@ RaycastResult BVH::IntersectTriangles(const Ray& ray) const {
 				result.barycentric = glm::vec3(currentIntersectionResult.y,
 					currentIntersectionResult.z,
 					1.0f - currentIntersectionResult.y - currentIntersectionResult.z);
+				/* HACK: Uses material from one vertex.
+				Materials should in any case be triangle-specific, not vertex-specific. */
+				result.materialIndex = scene->GetVertices()[triangleIter->x].materialIndex;
 				result.hit = true;
 			}
 		}

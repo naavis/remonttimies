@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "Vertex.h"
+#include "Material.h"
 
 std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename) {
 	Assimp::Importer importer;
@@ -17,7 +18,23 @@ std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename)
 
 	Scene::vertexList vertices = GetVertices(scene);
 	Scene::triangleList faces = GetFaces(scene);
+	Scene::materialList materials = GetMaterials(scene);
 	return std::shared_ptr<Scene>(new Scene(vertices, faces));
+}
+
+Scene::materialList SceneFactory::GetMaterials(const aiScene* scene) {
+	if (!scene->HasMaterials())
+		return std::vector<Material>();
+	std::vector<Material> materials;
+	materials.reserve(scene->mNumMaterials);
+	for (auto materialIndex = 0u; materialIndex < scene->mNumMaterials; ++materialIndex) {
+		aiMaterial* assimpMaterial = scene->mMaterials[materialIndex];
+		aiColor3D assimpDiffuseColor;
+		assimpMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, assimpDiffuseColor);
+		Material material(glm::vec3(assimpDiffuseColor.r, assimpDiffuseColor.g, assimpDiffuseColor.b));
+		materials.push_back(material);
+	}
+	return materials;
 }
 
 Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {
@@ -37,6 +54,7 @@ Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {
 			Vertex vertex;
 			vertex.position = glm::vec3(assimpVertex.x, assimpVertex.y, assimpVertex.z);
 			vertex.normal = glm::vec3(assimpNormal.x, assimpNormal.y, assimpNormal.z);
+			vertex.materialIndex = assimpMesh->mMaterialIndex;
 			vertices.push_back(vertex);
 		}
 	}

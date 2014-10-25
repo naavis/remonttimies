@@ -13,5 +13,6 @@ public:
 private:
 	static Scene::vertexList GetVertices(const aiScene* scene);
 	static Scene::triangleList GetFaces(const aiScene* scene);
+	static Scene::materialList GetMaterials(const aiScene* scene);
 	static int GetHighestIndexIn(const Scene::triangleList& list);
 };

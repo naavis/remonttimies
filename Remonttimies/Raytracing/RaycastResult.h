@@ -10,5 +10,6 @@ struct RaycastResult
 	float distance = std::numeric_limits<float>::max();
 	glm::vec3 position;
 	glm::vec3 barycentric;
+	unsigned int materialIndex;
 };
 
