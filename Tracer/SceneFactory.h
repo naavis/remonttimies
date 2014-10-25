@@ -12,6 +12,6 @@ public:
 	static std::shared_ptr<Scene> CreateFromFile(const std::string& filename);
 private:
 	static Scene::vertexList GetVertices(const aiScene* scene);
-	static Scene::faceList GetFaces(const aiScene* scene);
-	static int GetHighestIndexIn(const Scene::faceList& list);
+	static Scene::triangleList GetFaces(const aiScene* scene);
+	static int GetHighestIndexIn(const Scene::triangleList& list);
 };

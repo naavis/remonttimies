@@ -24,7 +24,7 @@ void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix
 	glBindBuffer(GL_ARRAY_BUFFER, sceneVBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
 	if (this->scene) {
-		glDrawElements(GL_TRIANGLES, scene->GetFaces().size() * 3, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, scene->GetTriangles().size() * 3, GL_UNSIGNED_INT, 0);
 	}
 	glDisableVertexAttribArray(vertexAttribLoc);
 	glDisableVertexAttribArray(normalAttribLoc);
@@ -45,7 +45,7 @@ void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
 	glDisableVertexAttribArray(normalAttribLoc);
 	glGenBuffers(1, &elementBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene->GetFaces().size() * sizeof(glm::ivec3), &(scene->GetFaces()[0]), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, scene->GetTriangles().size() * sizeof(glm::ivec3), &(scene->GetTriangles()[0]), GL_STATIC_DRAW);
 }
 
 OpenGLSceneManager::~OpenGLSceneManager()

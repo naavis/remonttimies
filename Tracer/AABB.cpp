@@ -15,11 +15,18 @@ void AABB::Add(Vertex vertex)
 
 AABB::AABB(AABB::triangleIterator startIter, AABB::triangleIterator endIter, const std::shared_ptr<Scene> scene)
 {
+	InitializeCorners();
 	this->Add(startIter, endIter, scene);
 }
 
 AABB::AABB()
 {
+	InitializeCorners();
+}
+
+void AABB::InitializeCorners() {
+	minCorner = glm::vec3(std::numeric_limits <float>::max());
+	maxCorner = glm::vec3(std::numeric_limits<float>::lowest());
 }
 
 void AABB::Add(AABB::triangleIterator startIter, AABB::triangleIterator endIter, const std::shared_ptr<Scene> scene)
@@ -40,7 +47,7 @@ void AABB::Add(const glm::ivec3 triangle, const std::shared_ptr<Scene> scene)
 	}
 }
 
-RaycastResult AABB::Intersect(Ray ray) const
+RaycastResult AABB::Intersect(const Ray& ray) const
 {
 	float tStart = std::numeric_limits<float>::lowest();
 	float tEnd = std::numeric_limits<float>::max();

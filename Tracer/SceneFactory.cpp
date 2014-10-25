@@ -16,7 +16,7 @@ std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename)
 		aiProcess_PreTransformVertices);
 
 	Scene::vertexList vertices = GetVertices(scene);
-	Scene::faceList faces = GetFaces(scene);
+	Scene::triangleList faces = GetFaces(scene);
 	return std::shared_ptr<Scene>(new Scene(vertices, faces));
 }
 
@@ -44,14 +44,14 @@ Scene::vertexList SceneFactory::GetVertices(const aiScene* scene) {
 	return vertices;
 }
 
-Scene::faceList SceneFactory::GetFaces(const aiScene* scene) {
+Scene::triangleList SceneFactory::GetFaces(const aiScene* scene) {
 	int numFaces = 0;
 	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		struct aiMesh* assimpMesh = scene->mMeshes[meshIndex];
 		numFaces += assimpMesh->mNumFaces;
 	}
 
-	Scene::faceList faces;
+	Scene::triangleList faces;
 	faces.reserve(numFaces);
 	for (unsigned int meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
 		struct aiMesh* assimpMesh = scene->mMeshes[meshIndex];
@@ -69,7 +69,7 @@ Scene::faceList SceneFactory::GetFaces(const aiScene* scene) {
 	return faces;
 }
 
-int SceneFactory::GetHighestIndexIn(const Scene::faceList& list) {
+int SceneFactory::GetHighestIndexIn(const Scene::triangleList& list) {
 	int highestIndex = 0;
 	for (auto face : list) {
 		for (int i = 0; i < 3; ++i) {

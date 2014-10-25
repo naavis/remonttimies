@@ -19,7 +19,8 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 			float localX = 2.0f * static_cast<float>(x) / width - 1.0f;
 			float localY = 2.0f * static_cast<float>(y) / height - 1.0f;
 			Ray ray = camera->GenerateRay(localX, -localY);
-			RaycastResult result = scene->Intersect(ray);
+			//RaycastResult result = scene->Intersect(ray);
+			RaycastResult result = bvhTree->Intersect(ray);
 			if (result.hit) {
 				float maxDist = 5.0f;
 				float visualDistance = glm::min(result.distance, maxDist);

@@ -9,11 +9,13 @@ class BVH {
 public:
 	BVH(std::shared_ptr<Scene> scene);
 	BVH(std::shared_ptr<Scene>, unsigned int startIndex, unsigned int endIndex);
-	RaycastResult Intersect(Ray ray) const;
+	RaycastResult Intersect(const Ray& ray) const;
 	bool IsLeafNode() const;
+	const AABB& GetAABB() const;
 private:
 	void BuildTree();
 	void Initialize();
+	RaycastResult IntersectTriangles(const Ray& ray) const;
 	unsigned int startIndex;
 	unsigned int endIndex;
 	std::unique_ptr<BVH> leftNode;

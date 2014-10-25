@@ -13,9 +13,8 @@ Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> faces)
 {
 }
 
-RaycastResult Scene::Intersect(Ray ray) {
+RaycastResult Scene::Intersect(const Ray& ray) {
 	RaycastResult result;
-	result.distance = std::numeric_limits<float>::max();
 	for (auto face : faces) {
 		glm::vec3 v0 = vertices[face.x].position;
 		glm::vec3 v1 = vertices[face.y].position;
@@ -40,16 +39,16 @@ const Scene::vertexList& Scene::GetVertices() const {
 	return vertices;
 }
 
-const Scene::faceList& Scene::GetFaces() const {
+const Scene::triangleList& Scene::GetTriangles() const {
 	return faces;
 }
 
-void Scene::SortFaces(unsigned int startIndex, unsigned int endIndex, unsigned int axis)
+void Scene::SortTriangles(unsigned int startIndex, unsigned int endIndex, unsigned int axis)
 {
 	if (startIndex < 0)
 		startIndex = 0;
-	if (endIndex > GetFaces().size())
-		endIndex = GetFaces().size();
+	if (endIndex > GetTriangles().size())
+		endIndex = GetTriangles().size();
 
 	std::sort(faces.begin() + startIndex, faces.begin() + endIndex, [axis](glm::ivec3 a, glm::ivec3 b) {
 		return a[axis] < b[axis];

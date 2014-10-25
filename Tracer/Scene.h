@@ -9,14 +9,14 @@ class Scene
 {
 public:
 	typedef std::vector<Vertex> vertexList;
-	typedef std::vector<glm::ivec3> faceList;
+	typedef std::vector<glm::ivec3> triangleList;
 
-	Scene(vertexList vertices, faceList faces);
-	RaycastResult Intersect(Ray ray);
+	Scene(vertexList vertices, triangleList faces);
+	RaycastResult Intersect(const Ray& ray);
 	const vertexList& GetVertices() const;
-	const faceList& GetFaces() const;
-	void SortFaces(unsigned int startIndex, unsigned int endIndex, unsigned int axis);
+	const triangleList& GetTriangles() const;
+	void SortTriangles(unsigned int startIndex, unsigned int endIndex, unsigned int axis);
 private:
 	vertexList vertices;
-	faceList faces;
+	triangleList faces;
 };
