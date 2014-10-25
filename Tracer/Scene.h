@@ -15,6 +15,7 @@ public:
 	RaycastResult Intersect(Ray ray);
 	const vertexList& GetVertices() const;
 	const faceList& GetFaces() const;
+	void SortFaces(unsigned int startIndex, unsigned int endIndex, unsigned int axis);
 private:
 	vertexList vertices;
 	faceList faces;

@@ -7,6 +7,7 @@ public:
 	BVH(std::shared_ptr<Scene> scene);
 	BVH(std::shared_ptr<Scene>, unsigned int startIndex, unsigned int endIndex);
 private:
+	void BuildTree();
 	unsigned int startIndex;
 	unsigned int endIndex;
 	std::unique_ptr<BVH> leftNode;

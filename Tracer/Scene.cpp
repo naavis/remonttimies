@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <climits>
+#include <algorithm>
 #include "Vertex.h"
 
 Scene::Scene(std::vector<Vertex> vertices, std::vector<glm::ivec3> faces)
@@ -41,4 +42,16 @@ const Scene::vertexList& Scene::GetVertices() const {
 
 const Scene::faceList& Scene::GetFaces() const {
 	return faces;
+}
+
+void Scene::SortFaces(unsigned int startIndex, unsigned int endIndex, unsigned int axis)
+{
+	if (startIndex < 0)
+		startIndex = 0;
+	if (endIndex > GetFaces().size())
+		endIndex = GetFaces().size();
+
+	std::sort(faces.begin() + startIndex, faces.begin() + endIndex, [axis](glm::ivec3 a, glm::ivec3 b) {
+		return a[axis] < b[axis];
+	});
 }
