@@ -22,8 +22,8 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 			Ray ray = camera->GenerateRay(localX, -localY);
 			RaycastResult result = bvhTree->Intersect(ray);
 			if (result.hit) {
-				auto materialColor = scene->GetMaterial(result.materialIndex).GetDiffuseColor();
-				image.SetPixel(x, y, glm::vec3(materialColor));
+				glm::vec3 materialColor = scene->GetMaterial(result.materialIndex).GetDiffuseColor();
+				image.SetPixel(x, y, materialColor);
 			}
 			else {
 				image.SetPixel(x, y, glm::vec3(0.0f));
