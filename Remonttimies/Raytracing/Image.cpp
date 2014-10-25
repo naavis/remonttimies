@@ -7,12 +7,12 @@ Image::Image(unsigned int width, unsigned int height)
 	imageContents.resize(width * height);
 }
 
-void Image::SetPixel(unsigned int x, unsigned int y, float intensity)
+void Image::SetPixel(unsigned int x, unsigned int y, glm::vec3 color)
 {
-	imageContents[y * width + x] = intensity;
+	imageContents[y * width + x] = color;
 }
 
-float Image::GetPixel(unsigned int x, unsigned int y) const
+glm::vec3 Image::GetPixel(unsigned int x, unsigned int y) const
 {
 	return imageContents[y * width + x];
 }
@@ -31,8 +31,10 @@ float Image::GetMaximumValue() const
 {
 	float max = std::numeric_limits<float>::lowest();
 	for (auto i = 0u; i < width * height; ++i) {
-		if (imageContents[i] > max)
-			max = imageContents[i];
+		for (auto j = 0u; j < 3; ++j) {
+			if (imageContents[i][j] > max)
+				max = imageContents[i][j];
+		}
 	}
 	return max;
 }

@@ -8,7 +8,7 @@
 #include <string>
 #include "Preview/OpenGLSceneManager.h"
 #include "Raytracing/Renderer.h"
-#include "PGMFile.h"
+#include "PPMFile.h"
 
 int main(int argc, char* argv[]) {
 	if (argc < 2) {
@@ -92,7 +92,7 @@ int main(int argc, char* argv[]) {
 			Image image = renderer.Render(width, height);
 			std::printf("Done!\n");
 			std::printf("Saving to file...\n");
-			PGMFile::Save(image, "output");
+			PPMFile::Save(image, "output");
 		}
 	}
 

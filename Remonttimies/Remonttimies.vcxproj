@@ -92,7 +92,7 @@
     <ClCompile Include="Raytracing\Image.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Preview\OpenGLSceneManager.cpp" />
-    <ClCompile Include="PGMFile.cpp" />
+    <ClCompile Include="PPMFile.cpp" />
     <ClCompile Include="Raytracing\Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
@@ -104,7 +104,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Raytracing\Image.h" />
     <ClInclude Include="Preview\OpenGLSceneManager.h" />
-    <ClInclude Include="PGMFile.h" />
+    <ClInclude Include="PPMFile.h" />
     <ClInclude Include="Raytracing\Ray.h" />
     <ClInclude Include="Raytracing\RaycastResult.h" />
     <ClInclude Include="Raytracing\Renderer.h" />
