@@ -30,7 +30,7 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 				float shadowFactor = 1.0f;
 				if (shadowRayResult.hit && shadowRayResult.distance < 100.0f)
 					shadowFactor = 0.1f;
-				glm::vec3 materialColor = scene->GetMaterial(result.materialIndex).GetDiffuseColor();
+				glm::vec3 materialColor = glm::pow(scene->GetMaterial(result.materialIndex).GetDiffuseColor(), glm::vec3(2.2f));
 				auto shade = glm::max(0.0f, glm::dot(result.normal, -sunLight));
 				auto finalColor = glm::pow(shadowFactor * shade * materialColor, glm::vec3(0.45f));
 				image.SetPixel(x, y, finalColor);
