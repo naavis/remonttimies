@@ -24,7 +24,7 @@ The program is simply run by giving the 3D model filename as the command-line pa
 
 The program has only been tested with a few OBJ files so far.
 
-__WASD keys__ move the camera forward, backward and sideways. __R__ and __F__ move the camera up and down. The arrow keys turn the camera. Pressing the __spacebar__ renders the image to _output.pgm_.
+__WASD keys__ move the camera forward, backward and sideways. __R__ and __F__ move the camera up and down. The arrow keys turn the camera. Pressing the __spacebar__ renders the image to _output.ppm_.
 
 License
 -------
