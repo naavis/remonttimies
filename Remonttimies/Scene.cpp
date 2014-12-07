@@ -41,7 +41,7 @@ void Scene::SortTriangles(unsigned int startIndex, unsigned int endIndex, unsign
 	});
 }
 
-const Material& Scene::GetMaterial(unsigned int index)
+const Material& Scene::GetMaterial(unsigned int materialIndex)
 {
-	return materials[index];
+	return materials[materialIndex];
 }

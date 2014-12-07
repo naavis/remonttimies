@@ -17,7 +17,7 @@ public:
 	const vertexList& GetVertices() const;
 	const triangleList& GetTriangles() const;
 	void SortTriangles(unsigned int startIndex, unsigned int endIndex, unsigned int axis);
-	const Material& GetMaterial(unsigned int index);
+	const Material& GetMaterial(unsigned int materialIndex);
 private:
 	vertexList vertices;
 	triangleList triangles;
