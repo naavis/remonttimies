@@ -14,7 +14,7 @@ OpenGLSceneManager::OpenGLSceneManager()
 	InitShaders();
 }
 
-void OpenGLSceneManager::Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix)
+void OpenGLSceneManager::Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
 	glEnableVertexAttribArray(vertexAttribLoc);
 	glEnableVertexAttribArray(normalAttribLoc);

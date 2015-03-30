@@ -2,25 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <AssimpBinDir>D:\Programming\assimp-3.1.1_build\code\Release\</AssimpBinDir>
-    <AssimpIncludeDir>D:\Programming\assimp-3.1.1\include\</AssimpIncludeDir>
+    <AssimpIncludeDir>$(SOLUTIONDIR)../Libraries/assimp/include/</AssimpIncludeDir>
+    <AssimpBuildDir>$(SOLUTIONDIR)../Libraries/assimp-build/code/Release</AssimpBuildDir>
   </PropertyGroup>
   <PropertyGroup>
-    <ExecutablePath>$(AssimpBinDir);$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(AssimpBuildDir);$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(AssimpIncludeDir);$(IncludePath)</IncludePath>
-    <LibraryPath>$(AssimpBinDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(AssimpBuildDir);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc120-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <BuildMacro Include="AssimpBinDir">
-      <Value>$(AssimpBinDir)</Value>
-    </BuildMacro>
     <BuildMacro Include="AssimpIncludeDir">
       <Value>$(AssimpIncludeDir)</Value>
+    </BuildMacro>
+    <BuildMacro Include="AssimpBuildDir">
+      <Value>$(AssimpBuildDir)</Value>
     </BuildMacro>
   </ItemGroup>
 </Project>
