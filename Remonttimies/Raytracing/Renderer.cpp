@@ -39,7 +39,6 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 					auto shade = glm::max(0.0f, glm::dot(result.normal, -sunLight));
 					auto finalColor = glm::pow(shadowFactor * shade * materialColor, glm::vec3(0.45f));
 					sum += finalColor;
-					image.SetPixel(x, y, finalColor);
 				}
 			}
 
