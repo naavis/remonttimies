@@ -19,6 +19,10 @@ int main(int argc, char* argv[]) {
 	std::string filename(argv[1]);
 	std::printf("Loading scene from file... ");
 	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
+	if (scene == nullptr) {
+		std::printf("Exiting...\n");
+		return -1;
+	}
 	std::printf("Done!\n");
 
 	const int width = 1280;
