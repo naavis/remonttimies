@@ -17,12 +17,16 @@ Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)
 Image Renderer::Render(unsigned int width, unsigned int height)
 {
 	Image image(width, height);
-	int samplesPerPixel = 16;
-	int totalBounces = 3;
+	int samplesPerPixel = 20;
+	int totalBounces = 4;
 
 	// Hard-coded light vector
 	glm::vec3 lightVector = glm::normalize(glm::vec3(0.2f, -0.3f, 0.5f));
 	glm::vec3 lightEmission = glm::vec3(50.0f);
+
+	// Probability of continuing when doing Russian roulette
+	float russianRouletteProbability = 0.8f;
+	
 
 	#pragma omp parallel for
 	for (int y = 0; y < height; ++y) {
@@ -40,7 +44,9 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 				// First path segment
 				Ray currentRay = camera->GenerateRay(localX, -localY);
 				
-				for (int bounce = 0; bounce < totalBounces + 1; ++bounce) {
+				// Termination variable for Russian roulette
+				bool terminate = false;
+				for (int bounce = 0; bounce < totalBounces + 1 || !terminate; ++bounce) {
 					RaycastResult result = bvhTree->Intersect(currentRay);
 					if (!result.hit)
 					{
@@ -65,6 +71,13 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 					glm::vec3 albedo = glm::pow(scene->GetMaterial(result.materialIndex).GetDiffuseColor(), glm::vec3(2.2f));
 					radianceSum += albedo * currentContribution * bounceRadiance;
 					currentContribution *= albedo;
+
+					if (bounce > totalBounces) {
+						// Apply Russian roulette
+						currentContribution /= russianRouletteProbability;
+						if (static_cast<float>(rand()) / RAND_MAX > russianRouletteProbability)
+							terminate = true;
+					}
 
 					// Generate next path segment
 					glm::mat3 basis = formBasis(result.normal);
