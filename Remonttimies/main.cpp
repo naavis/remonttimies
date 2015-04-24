@@ -17,10 +17,24 @@ int main(int argc, char* argv[]) {
 	}
 
 	std::string filename(argv[1]);
+	std::printf("Loading scene from file... ");
 	std::shared_ptr<Scene> scene = SceneFactory::CreateFromFile(filename);
+	if (scene == nullptr) {
+		std::printf("Exiting...\n");
+		return -1;
+	}
+	std::printf("Done!\n");
 
 	const int width = 1280;
 	const int height = 768;
+
+	float aspectRatio = static_cast<float>(width) / height;
+	const float vFov = 70.0f;
+	std::shared_ptr<Camera> camera(new Camera(glm::vec3(0.0, 0.0f, -2.0f), vFov, aspectRatio));
+
+	std::printf("Generating the Bounding Volume Hierarchy... ");
+	Renderer renderer(scene, camera);
+	std::printf("Done!\n");
 
 	glfwInit();
 	glfwWindowHint(GLFW_RESIZABLE, 0);
@@ -33,11 +47,6 @@ int main(int argc, char* argv[]) {
 
 	OpenGLSceneManager oglSceneManager;
 	oglSceneManager.SetScene(scene);
-
-	float aspectRatio = static_cast<float>(width) / height;
-	const float vFov = 70.0f;
-	std::shared_ptr<Camera> camera(new Camera(glm::vec3(0.0, 0.0f, -2.0f), vFov, aspectRatio));
-	Renderer renderer(scene, camera);
 
 	while (!glfwWindowShouldClose(window)) {
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -91,8 +100,9 @@ int main(int argc, char* argv[]) {
 			std::printf("Rendering... ");
 			Image image = renderer.Render(width, height);
 			std::printf("Done!\n");
-			std::printf("Saving to file...\n");
+			std::printf("Saving to file... ");
 			PPMFile::Save(image, "output");
+			std::printf("Done!\n");
 		}
 	}
 

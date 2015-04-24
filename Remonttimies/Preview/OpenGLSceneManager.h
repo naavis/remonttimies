@@ -8,7 +8,7 @@ public:
 	OpenGLSceneManager();
 	~OpenGLSceneManager();
 	void SetScene(std::shared_ptr<Scene> scene);
-	void Render(glm::mat4 viewMatrix, glm::mat4 projectionMatrix);
+	void Render(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix);
 
 private:
 	OpenGLSceneManager(const OpenGLSceneManager& other) {}

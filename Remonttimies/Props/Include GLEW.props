@@ -2,12 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <GLEWBaseDir>D:\Programming\glew-1.9.0\</GLEWBaseDir>
+    <GLEWBaseDir>$(SOLUTIONDIR)../Libraries/glew-1.12.0-win32/glew-1.12.0/</GLEWBaseDir>
   </PropertyGroup>
   <PropertyGroup>
-    <ExecutablePath>$(GLEWBaseDir)bin;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>$(GLEWBaseDir)bin/Release/Win32/;$(ExecutablePath)</ExecutablePath>
     <IncludePath>$(GLEWBaseDir)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(GLEWBaseDir)lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(GLEWBaseDir)lib/Release/Win32/;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>

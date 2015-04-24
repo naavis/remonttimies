@@ -9,12 +9,13 @@ Remonttimies requires the following libraries to run:
 * Open Asset Import Library ( http://assimp.sourceforge.net/ )
 * GLFW 3 ( http://www.glfw.org/ )
 * GLEW ( http://glew.sourceforge.net/ )
+* GLM ( http://glm.g-truc.net/ )
 
-_assimp.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program to run.
+_assimp-vc120-mt.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program to run. Assimp had to be build from source, since the binaries available at the time were broken.
 
 The project is being currently developed with Visual Studio 2013. The libraries are added to the project via Visual Studio Property Sheets.
 
-__NOTE:__ Currently the property sheets define User Macros that point to the relevant library directories. Since the paths to these directories will most likely be different on your computer, you will need to edit the macros by hand. This will be replaced with a more sane solution later.
+__NOTE:__ Currently the property sheets define User Macros that point to the relevant library directories. Since the paths to these directories will most likely be different on your computer, you will need to edit the macros by hand. This will be replaced with a more sane solution later. If you want to reproduce the paths originally used, place the libraries under `../Libraries`.
 
 How to run
 ----------

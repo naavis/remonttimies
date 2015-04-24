@@ -49,11 +49,13 @@ void BVH::BuildTree()
 	float minSurfaceAreaHeuristic = std::numeric_limits<float>::max();
 	unsigned int length = endIndex - startIndex;
 
+	float* surfaceAreas = new float[length];
+	float* reverseSurfaceAreas = new float[length];
+
 	for (auto axis = 0u; axis < 3; ++axis) {
 		scene->SortTriangles(startIndex, endIndex, axis);
 		AABB totalBoundingBox(scene->GetTriangles().cbegin() + startIndex, scene->GetTriangles().cbegin() + endIndex, scene);
-		float* surfaceAreas = new float[length];
-		float* reverseSurfaceAreas = new float[length];
+
 		AABB boundingBox;
 		AABB reverseBoundingBox;
 		for (auto splittingPlane = 0u; splittingPlane < length; ++splittingPlane) {
@@ -75,10 +77,10 @@ void BVH::BuildTree()
 				minIndex = splittingPlane;
 			}
 		}
-
-		delete[] surfaceAreas;
-		delete[] reverseSurfaceAreas;
 	}
+
+	delete[] surfaceAreas;
+	delete[] reverseSurfaceAreas;
 
 	if (minIndex == 0) {
 		isLeafNode = true;

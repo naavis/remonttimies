@@ -16,6 +16,13 @@ std::shared_ptr<Scene> SceneFactory::CreateFromFile(const std::string& filename)
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_PreTransformVertices);
 
+	if (scene == NULL) {
+		std::printf("\nImport failed:\n\t");
+		auto errorString = importer.GetErrorString();
+		std::printf(errorString);
+		std::printf("\n");
+		return nullptr;
+	}
 	Scene::vertexList vertices = GetVertices(scene);
 	Scene::triangleList faces = GetFaces(scene);
 	Scene::materialList materials = GetMaterials(scene);
