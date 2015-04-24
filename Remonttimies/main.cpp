@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 	const int height = 768;
 
 	float aspectRatio = static_cast<float>(width) / height;
-	const float vFov = 70.0f;
+	const float vFov = 45.0f;
 	std::shared_ptr<Camera> camera(new Camera(glm::vec3(0.0, 0.0f, -2.0f), vFov, aspectRatio));
 
 	std::printf("Generating the Bounding Volume Hierarchy... ");

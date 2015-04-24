@@ -19,7 +19,7 @@ public:
 	glm::mat4 GetProjectionMatrix() const;
 	glm::mat4 GetViewMatrix() const;
 private:
-	float vFov;
+	float vFov; // Stored in radians
 	glm::vec3 direction;
 	glm::vec3 position;
 	float aspectRatio;

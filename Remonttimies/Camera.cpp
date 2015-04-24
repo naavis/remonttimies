@@ -4,7 +4,7 @@
 #include <glm/gtx/transform.hpp>
 
 Camera::Camera(glm::vec3 position, float verticalFieldOfView, float aspectRatio)
-	: vFov(verticalFieldOfView),
+	: vFov(glm::radians(verticalFieldOfView)),
 	position(position),
 	direction(glm::vec3(0.0f, 0.0f, 1.0f)),
 	aspectRatio(aspectRatio)
@@ -15,7 +15,7 @@ Ray Camera::GenerateRay(float x, float y) {
 	glm::vec3 globalUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	glm::vec3 right = glm::normalize(glm::cross(direction, globalUp));
 	glm::vec3 up = glm::normalize(glm::cross(right, direction));
-	float planeDistance = 1.0f / glm::tan(0.5f * glm::radians(vFov));
+	float planeDistance = 1.0f / glm::tan(0.5f * vFov);
 	Ray resultRay;
 	resultRay.direction = glm::normalize(planeDistance * direction + aspectRatio * x * right + y * up);
 	resultRay.origin = position;
