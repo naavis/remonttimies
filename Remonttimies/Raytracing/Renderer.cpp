@@ -15,18 +15,25 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 {
 	Image image(width, height);
 	int samplesPerPixel = 8;
+
 	#pragma omp parallel for
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			glm::vec3 sum = glm::vec3(0.0f);
 			for (int sample = 0; sample < samplesPerPixel; ++sample) {
+				// Calculate pixel coordinates
 				float offsetX = static_cast<float>(rand()) / RAND_MAX - 0.5f;
 				float offsetY = static_cast<float>(rand()) / RAND_MAX - 0.5f;
 				float localX = 2.0f * (static_cast<float>(x) + offsetX) / width - 1.0f;
 				float localY = 2.0f * (static_cast<float>(y) + offsetY) / height - 1.0f;
+
+				// Cast first ray
 				Ray ray = camera->GenerateRay(localX, -localY);
 				RaycastResult result = bvhTree->Intersect(ray);
+
+				// Hard-coded light direction vector
 				glm::vec3 sunLight = glm::normalize(glm::vec3(0.2f, -0.3f, 0.5f));
+
 				if (result.hit) {
 					Ray shadowRay;
 					shadowRay.origin = result.position;
