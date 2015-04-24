@@ -11,7 +11,7 @@ Remonttimies requires the following libraries to run:
 * GLEW ( http://glew.sourceforge.net/ )
 * GLM ( http://glm.g-truc.net/ )
 
-_assimp-vc120-mt.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program to run. Assimp had to be build from source, since the binaries available at the time were broken.
+_assimp.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program to run. Assimp had to be build from source, since the binaries available at the time were broken.
 
 The project is being currently developed with Visual Studio 2013. The libraries are added to the project via Visual Studio Property Sheets.
 
