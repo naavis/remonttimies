@@ -1,6 +1,6 @@
 Remonttimies
 ============
-A hobby-project raytracer with real-time OpenGL preview of the scene.
+A hobby-project raytracer with real-time OpenGL preview of the scene. Currently the raytracer supports pathtracing with Russian roulette.
 
 ![Cornell box rendered with Remonttimies](Images/cornell_100_samples_per_pixel.jpg?raw=true "Cornell box rendered with Remonttimies")
 Cornell box rendered with Remonttimies
