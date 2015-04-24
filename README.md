@@ -1,6 +1,9 @@
 Remonttimies
 ============
-A hobby-project raytracer with real-time OpenGL preview of the scene. The name originates from a Finnish raytracing pun.
+A hobby-project raytracer with real-time OpenGL preview of the scene.
+
+![Cornell box rendered with Remonttimies](Images\cornell_100_samples_per_pixel.jpg)
+The Cornell box image above is rendered with Remonttimies.
 
 Requirements
 ------------
@@ -15,7 +18,7 @@ _assimp.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program 
 
 The project is being currently developed with Visual Studio 2013. The libraries are added to the project via Visual Studio Property Sheets.
 
-__NOTE:__ Currently the property sheets define User Macros that point to the relevant library directories. Since the paths to these directories will most likely be different on your computer, you will need to edit the macros by hand. This will be replaced with a more sane solution later. If you want to reproduce the paths originally used, place the libraries under `../Libraries`.
+__NOTE:__ Currently the property sheets define User Macros that point to the relevant library directories. Since the paths to these directories will most likely be different on your computer, you will need to edit the macros by hand, or place the libraries in the location pointed by the User Macros. This will be replaced with a more sane solution later. If you want to reproduce the paths originally used, place the libraries under `../Libraries`.
 
 How to run
 ----------
@@ -33,7 +36,7 @@ The project is licensed under the MIT license, reproduced below.
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Samuli Vuorinen
+Copyright (c) 2014-2015 Samuli Vuorinen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
