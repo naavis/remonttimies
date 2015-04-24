@@ -110,6 +110,7 @@
     <ClInclude Include="Raytracing\Ray.h" />
     <ClInclude Include="Raytracing\RaycastResult.h" />
     <ClInclude Include="Raytracing\Renderer.h" />
+    <ClInclude Include="Raytracing\Utilities.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="Vertex.h" />
