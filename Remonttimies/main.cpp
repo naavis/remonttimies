@@ -61,39 +61,40 @@ int main(int argc, char* argv[]) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 
-		float speed = 0.01f;
+		float moveSpeed = 0.05f;
+		float rotationSpeed = 0.01f;
 		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-			camera->MoveLocalX(-speed);
+			camera->MoveLocalX(-moveSpeed);
 		} else if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-			camera->MoveLocalX(speed);
+			camera->MoveLocalX(moveSpeed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-			camera->MoveLocalZ(-speed);
+			camera->MoveLocalZ(-moveSpeed);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-			camera->MoveLocalZ(speed);
+			camera->MoveLocalZ(moveSpeed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-			camera->MoveLocalY(speed);
+			camera->MoveLocalY(moveSpeed);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-			camera->MoveLocalY(-speed);
+			camera->MoveLocalY(-moveSpeed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-			camera->Pitch(-speed);
+			camera->Pitch(-rotationSpeed);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-			camera->Pitch(speed);
+			camera->Pitch(rotationSpeed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-			camera->Yaw(speed);
+			camera->Yaw(rotationSpeed);
 		}
 		else if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-			camera->Yaw(-speed);
+			camera->Yaw(-rotationSpeed);
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
