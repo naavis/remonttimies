@@ -33,7 +33,7 @@ void BVH::Initialize() {
 	const unsigned int trianglesInLeaf = 16;
 
 	startIndex = glm::max(startIndex, 0u);
-	endIndex = glm::min(endIndex, scene->GetTriangles().size());
+	endIndex = glm::min(endIndex, static_cast<unsigned int>(scene->GetTriangles().size()));
 	bbox = AABB(scene->GetTriangles().cbegin() + startIndex, scene->GetTriangles().cbegin() + endIndex, scene);
 	if (endIndex - startIndex > trianglesInLeaf) {
 		BuildTree();
