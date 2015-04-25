@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			std::printf("Rendering... ");
+			std::printf("Rendering...\n");
 			Image image = renderer.Render(width, height);
 			std::printf("Done!\n");
 			std::printf("Saving to file... ");
