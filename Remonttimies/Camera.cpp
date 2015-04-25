@@ -33,7 +33,7 @@ glm::vec3 Camera::GetDirection() const {
 
 glm::mat4 Camera::GetProjectionMatrix() const
 {
-	return glm::perspective(this->vFov, aspectRatio, 0.001f, 50.0f);
+	return glm::infinitePerspective(this->vFov, aspectRatio, 0.001f);
 }
 
 void Camera::SetPosition(glm::vec3 position)
