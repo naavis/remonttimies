@@ -50,6 +50,8 @@ int main(int argc, char* argv[]) {
 
 	std::vector<float> imageBuffer;
 	bool showRenderedImage = false;
+
+	// This is used to prevent multiple key press events when starting rendering or hiding the rendered image
 	bool renderKeyDown = false;
 
 	while (!glfwWindowShouldClose(window)) {
@@ -120,6 +122,7 @@ int main(int argc, char* argv[]) {
 					PPMFile::Save(image, "output");
 					std::printf("Done!\n");
 
+					// Convert Image object to buffer for glDrawPixels
 					imageBuffer.clear();
 					auto imageNormalized = image.GetNormalized();
 					for (int y = 0; y < height; ++y) {

@@ -29,7 +29,6 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 	float russianRouletteProbability = 0.8f;
 	
 	std::atomic<int> rowsDone = 0;
-
 	std::printf("Rendered: %3d%%", rowsDone);
 
 	#pragma omp parallel for
@@ -61,6 +60,7 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 					glm::vec3 hitPoint = result.position - 5.0f * glm::epsilon<float>() * currentRay.direction;
 					glm::vec3 bounceRadiance = glm::vec3(0.0f);
 
+					// Generate shadow ray
 					Ray shadowRay;
 					shadowRay.origin = hitPoint;
 					shadowRay.direction = -lightVector;
