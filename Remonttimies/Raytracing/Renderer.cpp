@@ -18,7 +18,7 @@ Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)
 Image Renderer::Render(unsigned int width, unsigned int height)
 {
 	Image image(width, height);
-	int samplesPerPixel = 20;
+	int samplesPerPixel = 10;
 	int totalBounces = 4;
 
 	// Hard-coded light vector
@@ -26,7 +26,7 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 	glm::vec3 lightEmission = glm::vec3(50.0f);
 
 	// Probability of continuing when doing Russian roulette
-	float russianRouletteProbability = 0.8f;
+	float russianRouletteProbability = 0.5f;
 	
 	std::atomic<int> rowsDone = 0;
 	std::printf("Rendered: %3d%%", rowsDone);
