@@ -28,6 +28,9 @@ void OpenGLSceneManager::Render(const glm::mat4& viewMatrix, const glm::mat4& pr
 	}
 	glDisableVertexAttribArray(vertexAttribLoc);
 	glDisableVertexAttribArray(normalAttribLoc);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glUseProgram(0);
 }
 
 void OpenGLSceneManager::SetScene(std::shared_ptr<Scene> scene)
