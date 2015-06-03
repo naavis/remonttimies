@@ -7,6 +7,7 @@
 #include "Utilities.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
+#include <atomic>
 
 Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)
 	: scene(scene), camera(camera)
@@ -17,7 +18,7 @@ Renderer::Renderer(std::shared_ptr<Scene> scene, std::shared_ptr<Camera> camera)
 Image Renderer::Render(unsigned int width, unsigned int height)
 {
 	Image image(width, height);
-	int samplesPerPixel = 20;
+	int samplesPerPixel = 10;
 	int totalBounces = 4;
 
 	// Hard-coded light vector
@@ -25,8 +26,10 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 	glm::vec3 lightEmission = glm::vec3(50.0f);
 
 	// Probability of continuing when doing Russian roulette
-	float russianRouletteProbability = 0.8f;
+	float russianRouletteProbability = 0.5f;
 	
+	std::atomic<int> rowsDone = 0;
+	std::printf("Rendered: %3d%%", rowsDone);
 
 	#pragma omp parallel for
 	for (int y = 0; y < height; ++y) {
@@ -57,15 +60,16 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 					glm::vec3 hitPoint = result.position - 5.0f * glm::epsilon<float>() * currentRay.direction;
 					glm::vec3 bounceRadiance = glm::vec3(0.0f);
 
+					// Generate shadow ray
 					Ray shadowRay;
 					shadowRay.origin = hitPoint;
 					shadowRay.direction = -lightVector;
 					auto shadowRayResult = bvhTree->Intersect(shadowRay);
 					if (!shadowRayResult.hit) {
 						// Shadow ray did not hit geometry -> hits the directional light
-						float thetaI = glm::max(0.0f, glm::dot(result.normal, shadowRay.direction));
+						float lightAngleCosine = glm::max(0.0f, glm::dot(result.normal, shadowRay.direction));
 						// Light PDF equals 1.0 with directional light, so it is omitted
-						bounceRadiance += thetaI * lightEmission / glm::pi<float>();
+						bounceRadiance += lightAngleCosine * lightEmission / glm::pi<float>();
 					}
 
 					glm::vec3 albedo = glm::pow(scene->GetMaterial(result.materialIndex).GetDiffuseColor(), glm::vec3(2.2f));
@@ -91,7 +95,10 @@ Image Renderer::Render(unsigned int width, unsigned int height)
 			radianceSum = radianceSum / static_cast<float>(samplesPerPixel);
 			image.SetPixel(x, y, glm::pow(radianceSum, glm::vec3(0.45f)));
 		}
+		rowsDone++;
+		printf("\b\b\b\b%3d%%", 100 * rowsDone / height);
 	}
+	printf("\n");
 
 	return image;
 }

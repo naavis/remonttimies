@@ -1,4 +1,4 @@
-Remonttimies v0.1
+Remonttimies v0.2
 =================
 A hobby-project raytracer with real-time OpenGL preview of the scene. Currently the raytracer supports pathtracing with Russian roulette.
 
@@ -14,11 +14,7 @@ Remonttimies requires the following libraries to run:
 * GLEW ( http://glew.sourceforge.net/ )
 * GLM ( http://glm.g-truc.net/ )
 
-_assimp.dll_, _glew32.dll_ and _glfw3.dll_ need to be available for the program to run. Assimp had to be build from source, since the binaries available at the time were broken.
-
-The project is being currently developed with Visual Studio 2013. The libraries are added to the project via Visual Studio Property Sheets.
-
-__NOTE:__ Currently the property sheets define User Macros that point to the relevant library directories. Since the paths to these directories will most likely be different on your computer, you will need to edit the macros by hand, or place the libraries in the location pointed by the User Macros. This will be replaced with a more sane solution later. If you want to reproduce the paths originally used, place the libraries under `../Libraries`.
+The project is currently being developed with Visual Studio 2013. The libraries are included in the project via NuGet packages. _NupenGL Core_ was used instead of _GLEW_ and _GLFW_ because the existing _GLEW_ package refused to work with VS2013. Unfortunately _NupenGL Core_ includes the _FreeGLUT_ library, which is not actually needed. _opengl32.lib_ had to be linked manually to get the project to work.
 
 How to run
 ----------
@@ -28,7 +24,7 @@ The program is simply run by giving the 3D model filename as the command-line pa
 
 The program has only been tested with a few OBJ files so far.
 
-__WASD keys__ move the camera forward, backward and sideways. __R__ and __F__ move the camera up and down. The arrow keys turn the camera. Pressing the __spacebar__ renders the image to _output.ppm_.
+__WASD keys__ move the camera forward, backward and sideways. __R__ and __F__ move the camera up and down. The arrow keys turn the camera. Pressing the __spacebar__ renders the image, shows it on screen and saves to _output.ppm_. Pressing __spacebar__ again hides the rendered image.
 
 License
 -------
