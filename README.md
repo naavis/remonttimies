@@ -1,4 +1,4 @@
-Remonttimies v0.1
+Remonttimies v0.2
 =================
 A hobby-project raytracer with real-time OpenGL preview of the scene. Currently the raytracer supports pathtracing with Russian roulette.
 
